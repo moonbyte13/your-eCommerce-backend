@@ -1,8 +1,6 @@
 const router = require('express').Router();
 const { Product, Category, Tag, ProductTag } = require('../../models');
 
-// The `/api/products` endpoint
-
 // get all products
 router.get('/', (req, res) => {
   // find all products
@@ -50,7 +48,7 @@ router.get('/:id', (req, res) => {
       res.status(404).json({ message: 'No product found with this id' });
       return;
     }
-    res.json({ message: `Product with id ${req.params.id}`, dbProductData });
+    res.json({ message: `Product with id ${dbProductData.id}`, dbProductData });
   })
   .catch(err => {
     console.log(err.message);
@@ -83,7 +81,7 @@ router.post('/', (req, res) => {
       // if no product tags, just respond
       res.status(200).json({ message: `Successfully created product with id ${req.params.id}`, product});
     })
-    .then((productTagIds) => res.status(200).json({ productTagIds }))
+    .then((productTagIds) => res.status(200).json({ message: `Created product with id: ${productTagIds.id}`, productTagIds }))
     .catch((err) => {
       console.log(err.message);
       res.status(400).json({error: err.message});
@@ -125,7 +123,7 @@ router.put('/:id', (req, res) => {
         ProductTag.bulkCreate(newProductTags),
       ]);
     })
-    .then((updatedProductTags) => res.json({ message: `Successfully updated product with id ${req.params.id}`, updatedProductTags }))
+    .then((updatedProductTags) => res.json({ message: `Successfully updated product with id: ${updatedProductTags.id}`, updatedProductTags }))
     .catch((err) => {
       console.log(err.message);
       res.status(400).json({error: err.message});
@@ -145,7 +143,7 @@ router.delete('/:id', (req, res) => {
       res.status(404).json({ message: 'No product found with this id' });
       return;
     }
-    res.json({ message: `Successfully deleted product with id ${req.params.id}` });
+    res.json({ message: `Successfully deleted product with id: ${dbProductData.id}`, dbProductData });
   })
   .catch(err => {
     console.log(err.message);

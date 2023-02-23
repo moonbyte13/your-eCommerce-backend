@@ -42,7 +42,7 @@ router.get('/:id', (req, res) => {
       res.status(404).json({ message: 'No tag found with this id' });
       return;
     }
-    res.json({ message: `Tag with id ${req.params.id}`, dbTagData });
+    res.json({ message: `Tag with id: ${dbTagData.id}`, dbTagData });
   })
   .catch(err => {
     console.log(err.message);
@@ -56,7 +56,7 @@ router.post('/', (req, res) => {
   Tag.create({
     tag_name: req.body.tag_name
   })
-  .then(dbTagData => res.json({ message: `Successfully created tag with id ${req.params.id}`, dbTagData }))
+  .then(dbTagData => res.json({ message: `Successfully created tag with id: ${dbTagData.id}`, dbTagData }))
   .catch(err => {
     console.log(err.message);
     res.status(500).json({ error: err.message });
@@ -81,7 +81,7 @@ router.put('/:id', (req, res) => {
       res.status(404).json({ message: 'No tag found with this id' });
       return;
     }
-    res.json({ message: `Successfully updated tag with id ${req.params.id}`, dbTagData });
+    res.json({ message: `Successfully updated tag with id: ${dbTagData.id}`, dbTagData });
   })
   .catch(err => {
     console.log(err.message);
@@ -102,7 +102,7 @@ router.delete('/:id', (req, res) => {
       res.status(404).json({ message: 'No tag found with this id' });
       return;
     }
-    res.json({ message: `Successfully deleted tag with id ${req.params.id}` });
+    res.json({ message: `Successfully deleted tag with id: ${dbTagData.id}`, dbTagData });
   })
   .catch(err => {
     console.log(err.message);

@@ -3,6 +3,7 @@ const { Category, Product } = require('../../models');
 
 // The `/api/categories` endpoint
 
+// get all categories
 router.get('/', (req, res) => {
   // find all categories
   // be sure to include its associated Products
@@ -21,6 +22,7 @@ router.get('/', (req, res) => {
   });
 });
 
+// get one category
 router.get('/:id', (req, res) => {
   // find a category by its `id` value
   // be sure to include its associated Products
@@ -48,18 +50,20 @@ router.get('/:id', (req, res) => {
   });
 });
 
+// create new category
 router.post('/', (req, res) => {
   // create a new category
   Category.create({
     category_name: req.body.category_name
   })
-  .then(dbCategoryData => res.json({ message: `Successfully created category with id ${req.params.id}`, dbCategoryData }))
+  .then(dbCategoryData => res.json({ message: `Successfully created category with id: ${dbCategoryData.id}`, dbCategoryData }))
   .catch(err => {
     console.log(err.message);
     res.status(500).json({ error: err.message });
   });
 });
 
+// update category
 router.put('/:id', (req, res) => {
   // update a category by its `id` value
   Category.update(
@@ -77,7 +81,7 @@ router.put('/:id', (req, res) => {
       res.status(404).json({ message: 'No category found with this id' });
       return;
     }
-    res.json({ message: `Successfully updated category with id ${req.params.id}`, dbCategoryData });
+    res.json({ message: `Successfully updated category with id: ${dbCategoryData.id}`, dbCategoryData });
   })
   .catch(err => {
     console.log(err.message);
@@ -85,6 +89,7 @@ router.put('/:id', (req, res) => {
   });
 });
 
+// delete category
 router.delete('/:id', (req, res) => {
   // delete a category by its `id` value
   Category.destroy({
@@ -97,7 +102,7 @@ router.delete('/:id', (req, res) => {
       res.status(404).json({ message: 'No category found with this id' });
       return;
     }
-    res.json({ message: `Successfully deleted category with id ${req.params.id}` });
+    res.json({ message: `Successfully deleted category with id: ${dbCategoryData.id}` });
   })
   .catch(err => {
     console.log(err.message);

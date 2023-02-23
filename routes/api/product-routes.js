@@ -19,10 +19,10 @@ router.get('/', (req, res) => {
       }
     ]
   })
-  .then(dbProductData => res.json(dbProductData))
+  .then(dbProductData => res.json({ message: "All products", dbProductData }))
   .catch(err => {
-    console.log(err);
-    res.status(500).json(err);
+    console.log(err.message);
+    res.status(500).json({ error: err.message });
   });
 });
 
@@ -50,11 +50,11 @@ router.get('/:id', (req, res) => {
       res.status(404).json({ message: 'No product found with this id' });
       return;
     }
-    res.json(dbProductData);
+    res.json({ message: `Product with id ${req.params.id}`, dbProductData });
   })
   .catch(err => {
-    console.log(err);
-    res.status(500).json(err);
+    console.log(err.message);
+    res.status(500).json({error: err.message});
   });
 });
 
@@ -81,12 +81,12 @@ router.post('/', (req, res) => {
         return ProductTag.bulkCreate(productTagIdArr);
       }
       // if no product tags, just respond
-      res.status(200).json(product);
+      res.status(200).json({ message: `Successfully created product with id ${req.params.id}`, product});
     })
-    .then((productTagIds) => res.status(200).json(productTagIds))
+    .then((productTagIds) => res.status(200).json({ productTagIds }))
     .catch((err) => {
-      console.log(err);
-      res.status(400).json(err);
+      console.log(err.message);
+      res.status(400).json({error: err.message});
     });
 });
 
@@ -125,13 +125,14 @@ router.put('/:id', (req, res) => {
         ProductTag.bulkCreate(newProductTags),
       ]);
     })
-    .then((updatedProductTags) => res.json(updatedProductTags))
+    .then((updatedProductTags) => res.json({ message: `Successfully updated product with id ${req.params.id}`, updatedProductTags }))
     .catch((err) => {
-      // console.log(err);
-      res.status(400).json(err);
+      console.log(err.message);
+      res.status(400).json({error: err.message});
     });
 });
 
+// delete product
 router.delete('/:id', (req, res) => {
   // delete one product by its `id` value
   Product.destroy({
@@ -144,11 +145,11 @@ router.delete('/:id', (req, res) => {
       res.status(404).json({ message: 'No product found with this id' });
       return;
     }
-    res.json(dbProductData);
+    res.json({ message: `Successfully deleted product with id ${req.params.id}` });
   })
   .catch(err => {
-    console.log(err);
-    res.status(500).json(err);
+    console.log(err.message);
+    res.status(500).json({error: err.message});
   });
 });
 

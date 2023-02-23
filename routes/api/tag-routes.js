@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { Tag, Product, ProductTag } = require('../../models');
 
 // The `/api/tags` endpoint
-
+// find all tags
 router.get('/', (req, res) => {
 
   // find all tags
@@ -15,13 +15,14 @@ router.get('/', (req, res) => {
       },
     ]
   })
-  .then(dbTagData => res.json(dbTagData))
+  .then(dbTagData => res.json({ message: "All tags", dbTagData }))
   .catch(err => {
-    console.log(err);
-    res.status(500).json(err);
+    console.log(err.message);
+    res.status(500).json({ error: err.message });
   });
 });
 
+// find a single tag by its `id`
 router.get('/:id', (req, res) => {
   // find a single tag by its `id`
   // be sure to include its associated Product data
@@ -41,26 +42,28 @@ router.get('/:id', (req, res) => {
       res.status(404).json({ message: 'No tag found with this id' });
       return;
     }
-    res.json(dbTagData);
+    res.json({ message: `Tag with id ${req.params.id}`, dbTagData });
   })
   .catch(err => {
-    console.log(err);
-    res.status(500).json(err);
+    console.log(err.message);
+    res.status(500).json({ error: err.message });
   });
 });
 
+// create a new tag
 router.post('/', (req, res) => {
   // create a new tag
   Tag.create({
     tag_name: req.body.tag_name
   })
-  .then(dbTagData => res.json(dbTagData))
+  .then(dbTagData => res.json({ message: `Successfully created tag with id ${req.params.id}`, dbTagData }))
   .catch(err => {
-    console.log(err);
-    res.status(500).json(err);
+    console.log(err.message);
+    res.status(500).json({ error: err.message });
   });
 });
 
+// update a tag's name by its `id` value
 router.put('/:id', (req, res) => {
   // update a tag's name by its `id` value
   Tag.update(
@@ -78,14 +81,15 @@ router.put('/:id', (req, res) => {
       res.status(404).json({ message: 'No tag found with this id' });
       return;
     }
-    res.json(dbTagData);
+    res.json({ message: `Successfully updated tag with id ${req.params.id}`, dbTagData });
   })
   .catch(err => {
-    console.log(err);
-    res.status(500).json(err);
+    console.log(err.message);
+    res.status(500).json({ error: err.message });
   });
 });
 
+// delete on tag by its `id` value
 router.delete('/:id', (req, res) => {
   // delete on tag by its `id` value
   Tag.destroy({
@@ -98,11 +102,11 @@ router.delete('/:id', (req, res) => {
       res.status(404).json({ message: 'No tag found with this id' });
       return;
     }
-    res.json(dbTagData);
+    res.json({ message: `Successfully deleted tag with id ${req.params.id}` });
   })
   .catch(err => {
-    console.log(err);
-    res.status(500).json(err);
+    console.log(err.message);
+    res.status(500).json({ error: err.message });
   });
 });
 

@@ -14,10 +14,10 @@ router.get('/', (req, res) => {
       },
     ]
   })
-  .then(dbCategoryData => res.json(dbCategoryData))
+  .then(dbCategoryData => res.json({ message: "All categories", dbCategoryData }))
   .catch(err => {
-    console.log(err);
-    res.status(500).json(err);
+    console.log(err.message);
+    res.status(500).json({ error: err.message });
   });
 });
 
@@ -40,11 +40,11 @@ router.get('/:id', (req, res) => {
       res.status(404).json({ message: 'No category found with this id' });
       return;
     }
-    res.json(dbCategoryData);
+    res.json({ message: `Category with id ${req.params.id}`, dbCategoryData });
   })
   .catch(err => {
-    console.log(err);
-    res.status(500).json(err);
+    console.log(err.message);
+    res.status(500).json({ error: err.message });
   });
 });
 
@@ -53,10 +53,10 @@ router.post('/', (req, res) => {
   Category.create({
     category_name: req.body.category_name
   })
-  .then(dbCategoryData => res.json(dbCategoryData))
+  .then(dbCategoryData => res.json({ message: `Successfully created category with id ${req.params.id}`, dbCategoryData }))
   .catch(err => {
-    console.log(err);
-    res.status(500).json(err);
+    console.log(err.message);
+    res.status(500).json({ error: err.message });
   });
 });
 
@@ -77,11 +77,11 @@ router.put('/:id', (req, res) => {
       res.status(404).json({ message: 'No category found with this id' });
       return;
     }
-    res.json(dbCategoryData);
+    res.json({ message: `Successfully updated category with id ${req.params.id}`, dbCategoryData });
   })
   .catch(err => {
-    console.log(err);
-    res.status(500).json(err);
+    console.log(err.message);
+    res.status(500).json({ error: err.message });
   });
 });
 
@@ -97,11 +97,11 @@ router.delete('/:id', (req, res) => {
       res.status(404).json({ message: 'No category found with this id' });
       return;
     }
-    res.json(dbCategoryData);
+    res.json({ message: `Successfully deleted category with id ${req.params.id}` });
   })
   .catch(err => {
-    console.log(err);
-    res.status(500).json(err);
+    console.log(err.message);
+    res.status(500).json({error: err.message});
   });
 });
 

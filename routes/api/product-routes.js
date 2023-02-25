@@ -43,7 +43,7 @@ router.get('/:id', async (req, res) => {
 
     if (!dbProductData) return res.status(404).json({ message: 'No product found with this id' });
 
-    res.json({ message: `Product with id ${dbProductData.id}`, dbProductData });
+    res.json({ message: `Product with id ${req.params.id}`, dbProductData });
 
   } catch (err) {
     console.log(err);
@@ -71,7 +71,7 @@ router.post('/', async (req, res) => {
       });
     }
 
-    return res.status(200).json({ message: `Successfully created product with id: ${product.id}`, product });
+    return res.status(200).json({ message: `Successfully created product with id: ${req.params.id}`, product });
   } catch (err) {
     console.log(err);
 
@@ -102,9 +102,12 @@ router.put('/:id', async (req, res) => {
       .map(({ id }) => id);
 
     // run both actions
-    await Promise.all([ProductTag.destroy({ where: { id: productTagsToRemove } }), ProductTag.bulkCreate(newProductTags)]);
+    const [destroyedProductTags, createdProductTags] = await Promise.all([
+      ProductTag.destroy({ where: { id: productTagsToRemove } }),
+      ProductTag.bulkCreate(newProductTags)
+    ]);
 
-    res.json({ message: `Successfully updated product with id: ${product[0]}.`, updatedProductTags });    
+    res.json({ message: `Successfully updated product with id: ${req.params.id}.`, createdProductTags });    
 
   } catch (err) {
       console.log(err);
@@ -126,7 +129,7 @@ router.delete('/:id', async (req, res) => {
       return;
     }
 
-    res.json({ message: `Successfully deleted product with id: ${dbProductData.id}`, dbProductData });
+    res.json({ message: `Successfully deleted product with id: ${req.params.id}`, dbProductData });
 
   } catch (err) {
     console.log(err);

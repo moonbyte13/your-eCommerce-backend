@@ -10,7 +10,7 @@
 ## Description 📝
 
 ```md
-
+This was a fun project, I struggled a little bit with getting all the routing and variables right, but fun for sure.
 ```
 
 ## User Story 📘
@@ -52,7 +52,7 @@ THEN I am able to successfully create, update, and delete data in my database
 * What is the Repo link?
   * <a href='https://github.com/moonphase13/your-eCommerce-backend' target='_blank'>***Repo***</a>
 * What is the link to the Demo Video?
-  <!-- * <a href='https://drive.google.com/file/d/1mTat7WW4mSdTrgADX_N5S1aUoVzTyLIm/view?usp=sharing/' target='_blank'>***Demo***</a> -->
+  <!-- * <a href='https://drive.google.com/file/d/1TgZ4Nvbu7A-4yaZc4AL2QfhUovzI5gcL/view?usp=sharing' target='_blank'>***Demo***</a> -->
   * Coming Soon
 * What is your Github link?
   * <a href='https://github.com/moonphase13' target='_blank'>***Github***</a>

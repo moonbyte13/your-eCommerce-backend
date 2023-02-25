@@ -79,7 +79,7 @@ router.put('/:id', async (req, res) => {
       return;
     }
 
-    res.json({ message: `Successfully updated category with id: ${req.params.id}`, dbCategoryData });
+    res.json({ message: `Successfully updated category with id: ${req.params.id}`});
 
   } catch (err) {  // catch any errors that occur in the try block and log the error message to the console 
     console.log(err); // log error to console 
@@ -103,7 +103,7 @@ router.delete('/:id', async (req, res) => {
       return;
     }
 
-    res.json({ message: `Successfully deleted category with id: ${req.params.id}` });
+    res.json({ message: `Successfully deleted category with id: ${req.params.id}`});
 
   } catch (err) {
     console.log(err);

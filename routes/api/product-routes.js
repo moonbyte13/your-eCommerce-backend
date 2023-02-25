@@ -107,7 +107,7 @@ router.put('/:id', async (req, res) => {
       ProductTag.bulkCreate(newProductTags)
     ]);
 
-    res.json({ message: `Successfully updated product with id: ${req.params.id}.`, createdProductTags });    
+    res.json({ message: `Successfully updated product with id: ${req.params.id}`});    
 
   } catch (err) {
       console.log(err);
@@ -129,7 +129,7 @@ router.delete('/:id', async (req, res) => {
       return;
     }
 
-    res.json({ message: `Successfully deleted product with id: ${req.params.id}`, dbProductData });
+    res.json({ message: `Successfully deleted product with id: ${req.params.id}`});
 
   } catch (err) {
     console.log(err);

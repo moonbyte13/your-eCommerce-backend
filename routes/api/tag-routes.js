@@ -71,7 +71,7 @@ router.put('/:id', async (req, res) => {
       return;
     }
 
-    res.json({ message: `Successfully updated tag with id: ${req.params.id}`, dbTagData });
+    res.json({ message: `Successfully updated tag with id: ${req.params.id}`});
 
   } catch (err) {
     console.log(err);
@@ -94,7 +94,7 @@ router.delete('/:id', async (req, res) => {
       return;
     }
 
-    res.json({ message: `Successfully deleted tag with id: ${req.params.id}`, dbTagData });
+    res.json({ message: `Successfully deleted tag with id: ${req.params.id}`});
 
   } catch (err) {
     console.log(err);

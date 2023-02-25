@@ -90,7 +90,6 @@ router.post('/', async (req, res) => {
 
 // update product
 router.put('/:id', async (req, res) => {
-  // start of try/catch block
   try {
     // update product data
     const product = await Product.update(req.body, { where: { id: req.params.id } });
@@ -99,31 +98,30 @@ router.put('/:id', async (req, res) => {
     const productTags = await ProductTag.findAll({ where: { product_id: req.params.id }});
 
     // get list of current tag_ids
-    const productTagIds = productTags.map(({ tag_id }) => tag_id);
+    const productTagIds = productTags.map(( tag ) => tag.tag_id);
 
     // create filtered list of new tag_ids
     const newProductTags = req.body.tagIds
       .filter((tag_id) => !productTagIds.includes(tag_id))
-      .map((tag_id) => ({ product_id: req.params.id, tag_id }));
+      .map((tag_id) => ({ product_id: product.id, tag_id }));
 
     // figure out which ones to remove
-    const productTagsToRemove = productTags
-      .filter(({ tag_id }) => !req.body.tagIds.includes(tag_id))
-      .map(({ id }) => id);
+    const productTagsToRemove = productTags.filter(({ tag_id }) => !req.body.tagIds.includes(tag_id)).map(({ id }) => id);
 
-    // run both actions
-    const [destroyedProductTags, createdProductTags] = await Promise.all([
+
+    // run both actions in parallel using Promise.all() 
+    await Promise.all([
       ProductTag.destroy({ where: { id: productTagsToRemove } }),
       ProductTag.bulkCreate(newProductTags)
-    ]);
+    ]);  	  		  		  	  	  	  	 	 	 	 	 	       
 
     res.json({ message: `Successfully updated product with id: ${req.params.id}`});    
 
-  } catch (err) { // catch errors and log them to the console and return a 500 status code with an error message
-      console.log(err);
-      res.status(400).json({ error: err });  	  		  		  	  	  	  	 	 	 	 	 	       
-  }// end of try/catch block
-});
+  } catch (err) { // catch errors and log them to the console and return a 500 status code with an error message    
+      console.log(err);      
+      res.status(400).json({ error: err });      
+  }// end of try/catch block  
+}); 
 
 // delete product
 router.delete('/:id', async (req, res) => {

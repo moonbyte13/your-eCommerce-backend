@@ -80,7 +80,7 @@ router.post('/', async (req, res) => {
       });
     }
 
-    return res.status(200).json({ message: `Successfully created product with id: ${req.params.id}`, product });
+    return res.status(200).json({ message: `Successfully created product with id: ${product.id}`, product });
   } catch (err) { // catch errors and log them to the console and return a 500 status code with an error message
     console.log(err);
 

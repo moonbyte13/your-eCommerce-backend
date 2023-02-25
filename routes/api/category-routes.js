@@ -52,7 +52,7 @@ router.post('/', async (req, res) => {
       category_name: req.body.category_name
     });
 
-    res.json({ message: `Successfully created category with id: ${req.params.id}`, dbCategoryData });
+    res.json({ message: `Successfully created category with id: ${dbCategoryData.id}`, dbCategoryData });
 
   } catch (err) {// catch errors and log them to the console and return a 500 status code with an error message
     console.log(err.message);

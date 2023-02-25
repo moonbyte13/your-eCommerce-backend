@@ -53,7 +53,7 @@ router.post('/', async (req, res) => {
       tag_name: req.body.tag_name
     });
 
-    res.json({ message: `Successfully created tag with id: ${req.params.id}`, dbTagData });
+    res.json({ message: `Successfully created tag with id: ${dbTagData.id}`, dbTagData });
 
   } catch(err) {// catch errors and log them to the console and return a 500 status code with an error message
     console.log(err.message);
